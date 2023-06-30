@@ -13,4 +13,5 @@ class CalendarController {
         model.addAttribute("title", "Calendar")
         return "/index"
     }
+
 }
