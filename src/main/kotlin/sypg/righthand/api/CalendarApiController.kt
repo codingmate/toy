@@ -29,7 +29,16 @@ class CalendarApiController {
             .also { println(it) }
 
              */
-        return "Hello, World!"
+        return "{\"date\": \"2023-07-03\",\n" +
+                "  \"lunarDate\": \"2023-05-15\",\n" +
+                "  \"lunarDateName\": \"음력 5월 15일\",\n" +
+                "  \"lunarYear\": 2023,\n" +
+                "  \"lunarMonth\": 5,\n" +
+                "  \"lunarDay\": 15,\n" +
+                "  \"leapMonth\": \"false\",\n" +
+                "  \"solarTerm\": \"소서\",\n" +
+                "  \"solarTermDate\": \"2023-07-07\"\n" +
+                "}"
     }
 
 }

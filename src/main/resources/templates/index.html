@@ -7,48 +7,73 @@
 </head>
 <body>
 <div class="container mt-5 mb-5">
-  <form th:action="@{/api/solarToLunar}" th:object="${calendarForm}" method="post">
-    <div class="form-group">
-      <label for="calendar">달력 선택:</label><br>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" id="solar" name="calendar" value="solar">
-        <label class="form-check-label" for="solar">양력</label><br>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" id="lunar" name="calendar" value="lunar">
-        <label class="form-check-label" for="lunar">음력</label><br>
-      </div>
+  <div class="form-group">
+    <label for="calendar">달력 선택:</label><br>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" id="solar" name="calendar" value="solar">
+      <label class="form-check-label" for="solar">양력</label><br>
     </div>
-
-    <div class="form-group">
-      <label for="year">년도 선택:</label>
-      <select class="form-control" name="year" id="year">
-        <option value="2023">2023</option>
-        <option value="2024">2024</option>
-      </select>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" id="lunar" name="calendar" value="lunar">
+      <label class="form-check-label" for="lunar">음력</label><br>
     </div>
+  </div>
 
-    <div class="form-group">
-      <label for="month">월 선택:</label>
-      <select class="form-control" name="month" id="month">
-        <option value="1">1월</option>
-        <option value="2">2월</option>
-      </select>
-    </div>
+  <div class="form-group">
+    <label for="year">년도 선택:</label>
+    <select class="form-control" name="year" id="year">
+      <option value="2023">2023</option>
+      <option value="2024">2024</option>
+    </select>
+  </div>
 
-    <div class="form-group">
-      <label for="day">일 선택:</label>
-      <select class="form-control" name="day" id="day">
-        <option value="1">1일</option>
-        <option value="2">2일</option>
-      </select>
-    </div>
+  <div class="form-group">
+    <label for="month">월 선택:</label>
+    <select class="form-control" name="month" id="month">
+      <option value="1">1월</option>
+    </select>
+  </div>
 
-    <input type="submit" class="btn btn-primary" value="제출">
-  </form>
+  <div class="form-group">
+    <label for="day">일 선택:</label>
+    <select class="form-control" name="day" id="day">
+      <option value="1">1일</option>
+      <option value="2">2일</option>
+    </select>
+  </div>
+
+  <button class="form-control btn btn-primary" id="switch" onClick="document.getElementById('result').value = '2023-07-03'">
+    제출
+  </button>
+  <input type="text" id="result" class="form-control">
 </div>
 
 <!-- Add Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+  document.getElementById("switch").addEventListener("click", function() {
+    const data = {
+      year : document.getElementById("year").value,
+      month : document.getElementById("month").value,
+      day : document.getElementById("day").value,
+    };
+    fetch('/api/calendar/solarToLunar', {
+      method: 'GET', // or 'GET'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      //body: JSON.stringify(data),
+    })
+            .then(response => response.json())
+            .then(data => {
+              // data에는 서버로부터 받아온 JSON 데이터가 들어있습니다
+              console.log(data)
+              document.getElementById('result').value = JSON.stringify(data);
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+  });
+</script>
 </body>
 </html>
